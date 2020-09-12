@@ -5,17 +5,14 @@ import (
 	"net/http"
 )
 
-var tlsCert = "/path/to/cert"
-var tlsKey = "/path/to/key"
-
 func main() {
-	srv := &http.Server{
+	httpServer := &http.Server{
 		Addr:    ":443",
 		Handler: nil,
 	}
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("*"))))
-	err := srv.ListenAndServeTLS("tlsCert", "tlsKey")
+	err := httpServer.ListenAndServeTLS("/Cert", "/Key")
 	if err != nil {
-		fmt.Printf("could not serve tls")
+		fmt.Printf("%s", err)
 	}
 }
